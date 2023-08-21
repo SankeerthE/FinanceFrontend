@@ -59,19 +59,13 @@ window.addEventListener(
             window.open('../../view/customer/myApplications.html','_self')
         }
         );
-        // withdrawApps
         document.getElementById("withdrawApps").addEventListener("click",()=>{
             window.open('../../view/customer/withdrawApplication.html','_self')
         }
         );
-
-         //log out
          this.document.getElementById("logoutBtn").addEventListener("click", ()=>{
             logout()
         })
-
-        // resetPWD
-        //log out
         this.document.getElementById("resetPWD").addEventListener("click", ()=>{
             window.open('../../view/customer/resetPassword.html','_self')
         })
