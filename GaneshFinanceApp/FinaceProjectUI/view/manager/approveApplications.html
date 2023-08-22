@@ -17,15 +17,11 @@
         <i class="fa-solid fa-backward"></i> <i class="fa-solid fa-house"></i>
       </button>
     </a>
-
   </nav>
-
-
   <div class="container">
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-4">
-        <!--  -->
         <select class="form-select mt-3 shadow rounded" id="sortBy">
           <option value="" selected disabled>Sort Data by </option>
           <option value="loan_id">Loan Type</option>
@@ -45,7 +41,6 @@
       </div>
       <div class="col-sm-2"></div>
     </div>
-
     <div class="row my-3">
       <div class="col-sm-2"></div>
       <div class="col-sm-4">
@@ -61,7 +56,6 @@
     <div class="row my-3">
       <div class="col-sm-2"></div>
       <div class="col-sm-4">
-
       </div>
       <div class="col-sm-4">
         <button class="btn btn-primary mt-3 shadow rounded" id="getApps"><i
@@ -70,8 +64,10 @@
       <div class="col-sm-2"></div>
     </div>
   </div>
-
-  <div class="container mt-5">
+  <div class="container" id="norecords" style="display:none;">
+    <h1 class="display-2 text-center py-5">Oops! No records founds :(</h1>
+  </div>
+  <div class="container mt-5" id="tableContainer">
     <table class="table table-striped ">
       <thead>
         <tr>
@@ -87,16 +83,10 @@
         </tr>
       </thead>
       <tbody id="tbody">
-        <!-- load data -->
       </tbody>
     </table>
   </div>
-
-
-
-  <!-- The Modal -->
   <div id="myModal" class="modal">
-    <!-- Modal content -->
     <div class="modal-content">
       <span class="close">&times;</span>
       <div class="container text-center">

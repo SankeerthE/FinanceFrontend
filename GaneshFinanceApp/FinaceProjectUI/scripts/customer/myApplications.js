@@ -169,6 +169,13 @@ function addContent() {
     while (tb.firstChild) {
         tb.removeChild(tb.firstChild);
     }
+    if(apps.length == 0){
+        document.getElementById("norecords").style.display = "block"
+        document.getElementById("tableContainer").style.display = "none"
+    }
+    else{
+        document.getElementById("norecords").style.display = "none"
+        document.getElementById("tableContainer").style.display = "block"
     apps.forEach((app) => {
         let row = document.createElement("tr")
         let c1 = document.createElement("td")
@@ -225,6 +232,7 @@ function addContent() {
         row.appendChild(c8);
         tb.appendChild(row)
     })
+}
 }
 
 function getApplications() {
