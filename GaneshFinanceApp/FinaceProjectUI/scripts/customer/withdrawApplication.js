@@ -27,12 +27,13 @@ async function withdrawApplication(appId) {
 async function fetchData(id) {
     try {
         const headers = new Headers();
-        headers.append('applicationId', id); // Add your authorization token
+        headers.append('applicationId', id);
+        headers.append('role', 'MANAGER')
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem("token"))
 
         const requestOptions = {
             method: 'GET',
             headers: headers,
-            // You can add more options here, like body for POST requests
         };
         const response = await fetch('http://localhost:8080/FinanceBackend/rest/customer/getDocument', requestOptions);
         if (!response.ok) {
@@ -45,7 +46,32 @@ async function fetchData(id) {
         throw error;
     }
 }
-
+async function approveApplication(appId, custID) {
+    try {
+        const bodyInfo = {
+            customerId: custID,
+            applicationNumber: appId
+        }
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'role': 'MANAGER',
+                'Authorization': 'Bearer ' + localStorage.getItem("token")
+            },
+            body: JSON.stringify(bodyInfo)
+        };
+        const response = await fetch('http://localhost:8080/FinanceBackend/rest/manager/onApprove', requestOptions);
+        if (!response.ok) {
+            throw new Error('Request failed');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+}
 function sortByLoanType() {
     apps.sort((app1, app2) => {
         const loanType1 = app1.loan_id.toUpperCase(); // Convert names to uppercase for case-insensitive comparison
@@ -118,6 +144,7 @@ function filterData() {
     const selectedLoanOption = allLoanOptions[index1]
     const selectedLoanType = String(selectedLoanOption.value)
 
+
     const selectedDate = String(document.getElementById('filterByDate').value)
     const selectedAppNo = String(document.getElementById('filterByAppNo').value)
 
@@ -131,6 +158,7 @@ function filterData() {
         })
         apps = filteredAppsByLoanType
     }
+ 
     console.log(selectedDate)
     if (selectedDate.length > 0) {
         var filteredAppsByDate = new Array()
@@ -160,6 +188,13 @@ function addContent() {
     while (tb.firstChild) {
         tb.removeChild(tb.firstChild);
     }
+    if(apps.length == 0){
+        document.getElementById("norecords").style.display = "block"
+        document.getElementById("tableContainer").style.display = "none"
+    }
+    else{
+        document.getElementById("norecords").style.display = "none"
+        document.getElementById("tableContainer").style.display = "block"
     apps.forEach((app) => {
         let row = document.createElement("tr")
         let c1 = document.createElement("td")
@@ -233,6 +268,7 @@ function addContent() {
         tb.appendChild(row)
     })
 }
+}
 
 function getApplications() {
     const req = new XMLHttpRequest()
@@ -262,9 +298,8 @@ function getApplications() {
 window
     .addEventListener(
         'DOMContentLoaded',
-        function () {
+        async () => {
             getApplications()
-            // this.document.getElementById("selector").addEventListener("change", addContent)
             this.document.getElementById("getApps").addEventListener("click", filterData)
         }
     )
