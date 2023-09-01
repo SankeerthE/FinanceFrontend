@@ -19,20 +19,27 @@ function checkCredentals() {
     const pwd = String(document.getElementById("pwd").value)
     const data = {
         username: email,
-        password: pwd
+        password: pwd,
+        userRole:"CUSTOMER"
     }
     if (validate(data) == 1) {
         const req = new XMLHttpRequest()
         req.onreadystatechange = async () => {
             if (req.status === 200 && req.readyState === 4) {
                 var res = req.responseText
-                console.log(res)
-                const val = res.split(":")
-                const token = String(val[0])
-                const customerID = String(val[1])
-                localStorage.setItem("token", token);
-                localStorage.setItem("customerID", customerID)
-                this.window.open("../../view/customer/customerProfile.html", '_self')
+                var resArr = res.split(":")
+                const role = String(resArr[2])
+                console.log(role)
+                console.log(resArr)
+                if(role=='CUSTOMER'){
+                    const token = String(resArr[0])
+                   localStorage.setItem("token", token);
+                   localStorage.setItem("customerID", resArr[1]);
+                   this.window.open("../../view/customer/customerProfile.html", '_self')
+                }else{
+                    alert("You are not authorized to login as customer")
+                }
+                
             }
             if (req.readyState == XMLHttpRequest.DONE && req.status != 200) {
                 alert("unsuccessful attempt ,check your credentials and please try again")

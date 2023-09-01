@@ -19,16 +19,25 @@ function checkCredentals() {
     const pwd = String(document.getElementById("pwd").value)
     const data = {
         username: email,
-        password: pwd
+        password: pwd,
+        userRole:"CLERK"
     }
     if (validate(data) == 1) {
         const req = new XMLHttpRequest()
         req.onreadystatechange = async () => {
             if (req.status === 200 && req.readyState === 4) {
                 var res = req.responseText
-                const token = String(res.split(":")[0])
-                localStorage.setItem("token", token);
-                this.window.open("../../view/clerk/clerkHome.html", '_self')
+                var resArr = res.split(":")
+                const role = String(resArr[2])
+               
+                if(role=='CLERK'){
+                    const token = String(resArr[0])
+                   localStorage.setItem("token", token);
+                   this.window.open("../../view/clerk/clerkHome.html", '_self')
+                }else{
+                    alert("You are not authorized to login as clerk")
+                }
+                
             }
             if (req.readyState == XMLHttpRequest.DONE && req.status != 200) {
                 alert("unsuccessful attempt ,check your credentials and please try again")

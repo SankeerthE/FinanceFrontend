@@ -30,7 +30,8 @@ function calcEMI() {
     n = Number(n)
     p = Number(p)
     r = Number(r)
-    const emi = (p * r * Math.pow((1 + r), n)) / (Math.pow(1 + r, n) - 1);
+    console.log(n+" "+p+" "+r)
+    const emi = (p * r * Math.pow((1 + r), n)) / (Math.pow(1 + r, n)-1);
     document.getElementById("emi").value = emi.toFixed(2)
 }
 
@@ -137,7 +138,9 @@ window
             calcEMI()
             this.document.getElementById("customerID").value = this.localStorage.getItem("customerID")
             this.document.getElementById("submitForm").addEventListener("click", getformData)
-            this.document.getElementById("amount").addEventListener("input", calcEMI)
+            this.document.getElementById("amount").addEventListener("input", ()=>{
+                calcEMI()
+            })
             this.document.getElementById("tenure").addEventListener("change", () => {
                 calcEMI()
             })

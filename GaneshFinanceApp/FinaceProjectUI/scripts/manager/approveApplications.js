@@ -285,14 +285,14 @@ function addContent() {
             btnReject.innerHTML = "Reject"
             
             btnReject.addEventListener("click", async () => {
-                var data = await rejectApplication(app.application_number)
+                var data = await rejectApplication(app.application_number,app.cust_id)
                 console.log(data)
                 alert("Application no :" + app.application_number + " rejected successfully")
                 window.location.reload();
             })
 
             btnApprove.addEventListener("click", async () => {
-                var data = await approveApplication(app.application_number)
+                var data = await approveApplication(app.application_number,app.cust_id)
                 console.log(data)
                 alert("Application no :" + app.application_number + " approved successfully")
                 window.location.reload();

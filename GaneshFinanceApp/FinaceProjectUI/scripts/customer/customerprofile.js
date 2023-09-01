@@ -51,6 +51,7 @@ window.addEventListener(
      'DOMContentLoaded',
      function(){  
         getCustomerDetails()
+        this.document.getElementById("customerId").innerHTML = this.localStorage.getItem("customerID")
         document.getElementById("applyLoan").addEventListener("click",()=>{
             window.open('../../view/customer/createApplication.html','_self')
         }
@@ -69,5 +70,6 @@ window.addEventListener(
         this.document.getElementById("resetPWD").addEventListener("click", ()=>{
             window.open('../../view/customer/resetPassword.html','_self')
         })
+        
      }
 )
